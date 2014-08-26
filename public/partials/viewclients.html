@@ -1,0 +1,39 @@
+﻿<div>
+	Search: 
+    <input type="text" data-ng-model="filter.quickSearch"></input>
+    <h1>{{ filter.quickSearch | uppercase }}</h1>
+   
+    <div class="mainCell clearfix" data-ng-repeat="client in dbClients | filter:filter.quickSearch">
+		<ul>
+    	<li>
+    		<span>Client ID Number:</span>
+			<span><a href="#/details/{{ client.clientID }}">{{ client.clientID }}</a></span>
+    	</li>
+    	<li>
+    		<span>Company Name:</span> 
+    		<span>{{ client.clientCompanyName }}</span>
+    	</li>
+    	<li>
+    		<span>Contact Name:</span> 
+    		<span>{{ client.clientContactFirstName }} {{ client.clientContactLastName }}</span>
+    	</li>
+    	</ul>   
+    	
+    	<div>{{ client.clientAddress }}</div>
+		<div>{{ client.clientProjects }}</div>
+    </div>
+    
+    <div>
+    	<h1>Create Client</h1>
+		<form>
+			<label>Company Name</label>
+			<input type="text" data-ng-model="formData.clientCompanyName">
+			<label>Contact First Name</label>
+			<input type="text" data-ng-model="formData.clientContactFirstName">
+			<label>Contact Last Name</label>
+			<input type="text" data-ng-model="formData.clientContactLastName">
+			<button data-ng-click="insertClient()">Add</button>
+		</form>
+    </div>
+
+</div>

@@ -1,0 +1,32 @@
+<html data-ng-app="clients">
+<head>
+    <title><%= title %></title>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400' rel='stylesheet' type='text/css' />
+    <link rel="stylesheet" href="/stylesheets/style.css" type="text/css" />
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.22/angular.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.22/angular-route.js"></script>
+    <script type="text/javascript" src="/javascripts/app.js"></script>
+    <script type="text/javascript" src="/javascripts/controllers.js"></script>
+    <script type="text/javascript" src="/javascripts/factories.js"></script>
+</head>
+<body>
+
+<div class="container">
+	<nav data-ng-controller="navController">
+		<ul>
+			<li><a href="#/">Home</a></li>
+			<li data-ng-repeat="items in nav | filter:'!home'"><a href="#/{{ items | lowercase}}">{{ items }}</a></li>
+		</ul>	
+	</nav>
+</div>
+
+<div class="container">
+<h1>THIS IS A TEST SITE, NOTHING ON THIS SITE IS REAL <%= title %></h1>
+</div>
+
+<div class="container" data-ng-view="">
+
+</div>
+
+</body>
+</html>
