@@ -3,37 +3,43 @@
     <input type="text" data-ng-model="filter.quickSearch"></input>
     <h1>{{ filter.quickSearch | uppercase }}</h1>
    
-    <div class="mainCell clearfix" data-ng-repeat="client in dbClients | filter:filter.quickSearch">
-		<ul>
-    	<li>
-    		<span>Client ID Number:</span>
-			<span><a href="#/details/{{ client.clientID }}">{{ client.clientID }}</a></span>
-    	</li>
-    	<li>
-    		<span>Company Name:</span> 
-    		<span>{{ client.clientCompanyName }}</span>
-    	</li>
-    	<li>
-    		<span>Contact Name:</span> 
-    		<span>{{ client.clientContactFirstName }} {{ client.clientContactLastName }}</span>
-    	</li>
-    	</ul>   
-    	
-    	<div>{{ client.clientAddress }}</div>
-		<div>{{ client.clientProjects }}</div>
-    </div>
+    <div class="clientCard clearfix" data-ng-repeat="client in dbClients | filter:filter.quickSearch">
     
-    <div>
+    <div class="cardTop">{{ client.clientID }}: {{ client.clientCompanyName | uppercase}}</div>
+    <div>{{ client.clientContactFirstName }}</div>
+    <div>{{ client.clientContactLastName }}</div>
+    <div>{{ client.clientEmail }}</div>
+    <div>{{ client.clientAddress["addressStreet"] }} {{ client.clientAddress["addressCity"] }} {{ client.clientAddress["addressState"] }} {{ client.clientAddress["addressZip"] }}</div>
+    <div>{{ client.clientWorkPhone }}</div>
+    <div>{{ client.clientMobilePhone }}</div>
+
+    </div>
+    <hr />
+    <div class="create">
     	<h1>Create Client</h1>
 		<form>
+			<label>Client ID: <span class="readonly">{{ nextID }}</span></label>
 			<label>Company Name</label>
 			<input type="text" data-ng-model="formData.clientCompanyName">
 			<label>Contact First Name</label>
 			<input type="text" data-ng-model="formData.clientContactFirstName">
 			<label>Contact Last Name</label>
 			<input type="text" data-ng-model="formData.clientContactLastName">
+			<label>Contact Email</label>
+			<input type="text" data-ng-model="formData.clientEmail">
+			<label>Street Address</label>
+			<input type="text" data-ng-model="formData.clientAddress.addressStreet">
+			<label>City</label>
+			<input type="text" data-ng-model="formData.clientAddress.addressCity">
+			<label>State</label>
+			<input type="text" data-ng-model="formData.clientAddress.addressState">
+			<label>Zip</label>
+			<input type="text" data-ng-model="formData.clientAddress.addressZip">
+			<label>Contact Phone</label>
+			<input type="text" data-ng-model="formData.clientWorkPhone">
+			<label>Contact Mobile Phone</label>
+			<input type="text" data-ng-model="formData.clientMobilePhone">
 			<button data-ng-click="insertClient()">Add</button>
 		</form>
     </div>
-
 </div>

@@ -90,7 +90,6 @@ router.route('/clients/:client_id')
 // Update Client Via ID
 	.put(function(req, res) {
 
-		// use our bear model to find the bear we want
 		Client.findById(req.params.client_id, function(err, client) {
 
 			if (err)

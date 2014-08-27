@@ -28,6 +28,7 @@ clients.controller('clientData', function ($scope, $routeParams, dbData) {
     $scope.dbClients = [];
     dbData.getClients().success(function(data){
 	    $scope.dbClients = data;
+	    console.log('run get clients');
     });
     
     /*$scope.updateClient = function (id) {
@@ -49,12 +50,33 @@ clients.controller('clientData', function ($scope, $routeParams, dbData) {
           });
     };*/
     
+    $scope.nextID = [];
+    
+    function getNextID () {
+    dbData.getClients().success(function(data){
+	    var i;
+	    for(i = 0;i < data.length;i++){
+		    if(data[i].clientID === NaN){
+			    $scope.nextID = 1001;
+		    } else if(data[i].clientID === (data.length + 1000)){
+			$scope.nextID = data[i].clientID + 1;
+			console.log('the next client ID is', $scope.nextID);  
+		    };
+	    };
+    });
+    };
+    
+    getNextID();
+    
     $scope.insertClient = function(){
+        getNextID();
+        client['clientID'] = $scope.nextID
         dbData.insertClient(client)
             .success(function () {
                 $scope.status = 'Inserted Client! Refreshing client list.';
                 $scope.dbClients.push(client);
                 console.log('Pushed', client);
+                $scope.formData = {};
             }).
             error(function(error) {
                 $scope.status = 'Unable to insert client: ' + error.message;
