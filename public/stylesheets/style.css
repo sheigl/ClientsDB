@@ -60,7 +60,18 @@ form * {
 	width:calc(25% - 10px);
 }
 
-.clientCard .cardTop {
+.full-clientCard {
+	margin:10px 0;
+	padding:10px;
+	border:1px solid #cecece;
+	border-radius:10px;
+}
+
+.full-clientCard > div {
+	margin:25px;
+}
+
+.cardTop {
 	background:linear-gradient(#5292ff 0%, #0760fc 100%);
 	padding:5px;
 	font-weight:700;

@@ -22,6 +22,8 @@ clients.controller('navController', function($scope){
 
 clients.controller('clientData', function ($scope, $routeParams, dbData) {
     
+    $scope.ID = $routeParams.ID;
+    
     $scope.formData = {};
     var client = $scope.formData;
     

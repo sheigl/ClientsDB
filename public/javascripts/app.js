@@ -22,7 +22,7 @@ clients.config(['$routeProvider', function ($routeProvider) {
             controller: 'clientData',
             templateUrl: 'partials/viewclients.html'
         })
-        .when('/details/:clientID',
+        .when('/details/:ID',
         {
             controller: 'clientData',
             templateUrl: 'partials/clientdetails.html'
