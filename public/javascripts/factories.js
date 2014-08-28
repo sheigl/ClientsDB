@@ -11,10 +11,10 @@ clients.factory('dbData', function($http) {
 		return $http.post(urlBase, client);
 	};
 	
-	/*dbData.getClients = function(id){
-		return $http.get(urlBase + '/' + id);
+	dbData.singleClient = function(oneClient){
+		return $http.get(urlBase + '/' + oneClient);
 	};
-	
+	/*
 	dbData.updateClient = function(client){
 		return $http.put(urlBase + '/' + clientID, client)
 	};

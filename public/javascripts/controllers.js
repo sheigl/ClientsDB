@@ -23,15 +23,40 @@ clients.controller('navController', function($scope){
 clients.controller('clientData', function ($scope, $routeParams, dbData) {
     
     $scope.ID = $routeParams.ID;
-    
-    $scope.formData = {};
-    var client = $scope.formData;
+
     
     $scope.dbClients = [];
     dbData.getClients().success(function(data){
 	    $scope.dbClients = data;
 	    console.log('run get clients');
     });
+    
+    var oneClient = $routeParams.ID;
+    $scope.singleClient = [];
+	$scope.projectData = [];
+	
+    function clientData(){
+	    dbData.singleClient(oneClient).success(function(data){
+		    console.log(oneClient);
+		    $scope.singleClient = data;
+		    $scope.allProjects = data.clientProjects
+		    console.log('run got the client', data);
+	    });
+    };
+    
+    if (typeof $routeParams.ID === 'undefined'){
+		 console.log('no client to get');
+	   } else {
+		  clientData();
+	   }
+    
+    $scope.projectData = {};
+    var project = $scope.projectData;
+    
+    $scope.addProject = function(){
+	    $scope.allProjects.push(project);
+	    console.log(project);
+    };
     
     /*$scope.updateClient = function (id) {
         var client;
@@ -58,7 +83,7 @@ clients.controller('clientData', function ($scope, $routeParams, dbData) {
     dbData.getClients().success(function(data){
 	    var i;
 	    for(i = 0;i < data.length;i++){
-		    if(data[i].clientID === NaN){
+		    if(typeof data[i].clientID === 'undefined'){
 			    $scope.nextID = 1001;
 		    } else if(data[i].clientID === (data.length + 1000)){
 			$scope.nextID = data[i].clientID + 1;
@@ -69,6 +94,9 @@ clients.controller('clientData', function ($scope, $routeParams, dbData) {
     };
     
     getNextID();
+    
+    $scope.formData = {};
+    var client = $scope.formData;
     
     $scope.insertClient = function(){
         getNextID();

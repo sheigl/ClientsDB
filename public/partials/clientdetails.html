@@ -1,13 +1,22 @@
 ﻿<a href="#/viewclients">Return to Client List</a>
 
-<div class="full-clientCard clearfix" data-ng-repeat="client in dbClients | filter:ID">
+<div class="full-clientCard clearfix">
     
-    <a href="#/details/{{ client.clientID }}"><div class="cardTop">{{ client.clientID }}: {{ client.clientCompanyName | uppercase}}</div></a>
-    <div>{{ client.clientContactFirstName }}</div>
-    <div>{{ client.clientContactLastName }}</div>
-    <div>{{ client.clientEmail }}</div>
-    <div>{{ client.clientAddress["addressStreet"] }} {{ client.clientAddress["addressCity"] }} {{ client.clientAddress["addressState"] }} {{ client.clientAddress["addressZip"] }}</div>
-    <div>{{ client.clientWorkPhone }}</div>
-    <div>{{ client.clientMobilePhone }}</div>
-
+    <div class="cardTop">{{ singleClient.clientID }}: {{ singleClient.clientCompanyName | uppercase}}</div>
+    <div>{{ singleClient.clientContactFirstName }}</div>
+    <div>{{ singleClient.clientContactLastName }}</div>
+    <div>{{ singleClient.clientEmail }}</div>
+    <div>{{ singleClient.clientAddress["addressStreet"] }} {{ singleClient.clientAddress["addressCity"] }} {{ singleClient.clientAddress["addressState"] }} {{ singleClient.clientAddress["addressZip"] }}</div>
+    <div>{{ singleClient.clientWorkPhone }}</div>
+    <div>{{ singleClient.clientMobilePhone }}</div>
+	<div>{{ allProjects }}</div>
  </div>
+ 
+ <form>
+ <input type="text" data-ng-model="projectData.projectName"></input>
+ <select data-ng-model="projectData.projectStatus">
+	 <option value="Active">Active</option>
+	 <option value="Complete">Complete</option>
+ </select>
+ <button data-ng-click="addProject()">Add</button>
+ </form>
