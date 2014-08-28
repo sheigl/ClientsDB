@@ -17,11 +17,11 @@ clients.factory('dbData', function($http) {
 	/*
 	dbData.updateClient = function(client){
 		return $http.put(urlBase + '/' + clientID, client)
-	};
+	};*/
 	
 	dbData.deleteClient = function(id){
 		return $http.delete(urlBase + '/' + id);
-	};*/
+	};
 	
 	return dbData;
 	

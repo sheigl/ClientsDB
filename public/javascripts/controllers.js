@@ -113,6 +113,17 @@ clients.controller('clientData', function ($scope, $routeParams, dbData) {
             });
 	};
 	
+	$scope.deleteClient = function(id){
+		console.log(id);
+		dbData.deleteClient(id)
+			.success(function(){
+				console.log('deleted', id);
+			}).
+			error(function(error){
+				$scope.status = 'Unable to delete client: ' + error.message;
+			});
+	};
+	
 	/*$scope.deleteClient = function (id) {
         dbData.deleteClient(id)
         .success(function () {

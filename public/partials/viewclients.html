@@ -5,7 +5,7 @@
    
     <div class="clientCard clearfix" data-ng-repeat="client in dbClients | filter:filter.quickSearch">
     
-    <a href="#/details/{{ client._id }}"><div class="cardTop">{{ client.clientID }}: {{ client.clientCompanyName | uppercase}}</div></a>
+    <div class="cardTop"><a href="#/details/{{ client._id }}">{{ client.clientID }}: {{ client.clientCompanyName | uppercase}}</a><button class="deleteCard" data-ng-click="deleteClient(client._id)">X</button></div>
     <div>{{ client.clientContactFirstName }}</div>
     <div>{{ client.clientContactLastName }}</div>
     <div>{{ client.clientEmail }}</div>
