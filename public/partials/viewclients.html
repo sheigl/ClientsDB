@@ -1,18 +1,18 @@
-﻿<div>
+﻿<div class="allCards">
 	Search: 
     <input type="text" data-ng-model="filter.quickSearch"></input>
     <h1>{{ filter.quickSearch | uppercase }}</h1>
    
     <div class="clientCard clearfix" data-ng-repeat="client in dbClients | filter:filter.quickSearch">
     
-    <div class="cardTop"><a href="#/details/{{ client._id }}">{{ client.clientID }}: {{ client.clientCompanyName | uppercase}}</a><button class="deleteCard" data-ng-click="deleteClient(client._id)">X</button></div>
+    <div class="cardTop"><a href="#/details/{{ client._id }}">{{ client.clientID }}: {{ client.clientCompanyName | uppercase}}</a></div>
     <div>{{ client.clientContactFirstName }}</div>
     <div>{{ client.clientContactLastName }}</div>
     <div>{{ client.clientEmail }}</div>
     <div>{{ client.clientAddress["addressStreet"] }} {{ client.clientAddress["addressCity"] }} {{ client.clientAddress["addressState"] }} {{ client.clientAddress["addressZip"] }}</div>
     <div>{{ client.clientWorkPhone }}</div>
     <div>{{ client.clientMobilePhone }}</div>
-
+	<!-- <div class="delete alert alert-danger"><a href="#/details/{{ client._id }}/delete">Delete</a></div> -->
     </div>
     <hr />
     <div class="create">

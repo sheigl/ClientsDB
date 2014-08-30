@@ -14,10 +14,10 @@ clients.factory('dbData', function($http) {
 	dbData.singleClient = function(oneClient){
 		return $http.get(urlBase + '/' + oneClient);
 	};
-	/*
-	dbData.updateClient = function(client){
-		return $http.put(urlBase + '/' + clientID, client)
-	};*/
+	
+	dbData.updateClient = function(clientID, data){
+		return $http.put(urlBase + '/' + clientID, data)
+	};
 	
 	dbData.deleteClient = function(id){
 		return $http.delete(urlBase + '/' + id);

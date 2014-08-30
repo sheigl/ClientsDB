@@ -20,6 +20,67 @@ clients.controller('navController', function($scope){
 	$scope.nav = ['Home','About','Contact', 'viewclients'];
 });
 
+
+clients.controller('projectController', function($scope, $routeParams, dbData, alerts, windowControl){
+	$scope.ID = $routeParams.ID;
+	
+	
+});
+
+clients.controller('deleteController', function($scope, $routeParams, dbData, alerts, windowControl){
+	
+	$scope.ID = $routeParams.ID;
+	
+	$scope.back = windowBack;
+	
+	$scope.deleteClient = function(id){
+	console.log(id);
+	dbData.deleteClient(id)
+		.success(function(){
+			console.log('deleted', id);
+			back();
+		}).
+		error(function(error){
+			$scope.status = 'Unable to delete client: ' + error.message;
+		});
+	};
+	
+});
+
+
+
+clients.controller('clientDetails', function ($scope, $routeParams, dbData) {
+
+	$scope.formData = {};
+    $scope.singleClient = [];
+    $scope.allProjects = [];
+	var insertData = {'clientProjects':[$scope.formData]};
+	
+	    dbData.singleClient($routeParams.ID).success(function(data){
+		    console.log($routeParams.ID);
+		    $scope.singleClient = data;
+		    $scope.allProjects = data.clientProjects;
+		    console.log(insertData);
+	    });
+
+console.log(insertData);
+   
+        
+    $scope.addProject = function(){
+	    dbData.updateClient($routeParams.ID, insertData)
+            .success(function () {
+            $scope.allProjects.push($scope.formData);
+            console.log('Pushed', $scope.formData);
+            $scope.formData = {};
+        }).
+        error(function(error) {
+            $scope.status = 'Unable to insert: ' + error.message;
+        });
+    };
+
+
+});
+
 clients.controller('clientData', function ($scope, $routeParams, dbData) {
     
     $scope.ID = $routeParams.ID;
@@ -31,32 +92,6 @@ clients.controller('clientData', function ($scope, $routeParams, dbData) {
 	    console.log('run get clients');
     });
     
-    var oneClient = $routeParams.ID;
-    $scope.singleClient = [];
-	$scope.projectData = [];
-	
-    function clientData(){
-	    dbData.singleClient(oneClient).success(function(data){
-		    console.log(oneClient);
-		    $scope.singleClient = data;
-		    $scope.allProjects = data.clientProjects
-		    console.log('run got the client', data);
-	    });
-    };
-    
-    if (typeof $routeParams.ID === 'undefined'){
-		 console.log('no client to get');
-	   } else {
-		  clientData();
-	   }
-    
-    $scope.projectData = {};
-    var project = $scope.projectData;
-    
-    $scope.addProject = function(){
-	    $scope.allProjects.push(project);
-	    console.log(project);
-    };
     
     /*$scope.updateClient = function (id) {
         var client;
@@ -83,9 +118,10 @@ clients.controller('clientData', function ($scope, $routeParams, dbData) {
     dbData.getClients().success(function(data){
 	    var i;
 	    for(i = 0;i < data.length;i++){
+	    console.log(data[i].clientID);
 		    if(typeof data[i].clientID === 'undefined'){
 			    $scope.nextID = 1001;
-		    } else if(data[i].clientID === (data.length + 1000)){
+		    } else {
 			$scope.nextID = data[i].clientID + 1;
 			console.log('the next client ID is', $scope.nextID);  
 		    };
@@ -113,16 +149,6 @@ clients.controller('clientData', function ($scope, $routeParams, dbData) {
             });
 	};
 	
-	$scope.deleteClient = function(id){
-		console.log(id);
-		dbData.deleteClient(id)
-			.success(function(){
-				console.log('deleted', id);
-			}).
-			error(function(error){
-				$scope.status = 'Unable to delete client: ' + error.message;
-			});
-	};
 	
 	/*$scope.deleteClient = function (id) {
         dbData.deleteClient(id)

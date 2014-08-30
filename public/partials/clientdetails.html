@@ -10,13 +10,11 @@
     <div>{{ singleClient.clientWorkPhone }}</div>
     <div>{{ singleClient.clientMobilePhone }}</div>
 	<div>{{ allProjects }}</div>
+	<div class="delete alert alert-danger"><a href="#/details/{{ singleClient._id }}/delete">Delete</a></div>
  </div>
  
  <form>
- <input type="text" data-ng-model="projectData.projectName"></input>
- <select data-ng-model="projectData.projectStatus">
-	 <option value="Active">Active</option>
-	 <option value="Complete">Complete</option>
- </select>
+ <input type="text" data-ng-model="formData.projectName"></input>
+ <input type="text" data-ng-model="formData.projectStatus"></input>
  <button data-ng-click="addProject()">Add</button>
  </form>

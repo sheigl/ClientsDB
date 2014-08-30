@@ -27,7 +27,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/dbClient');
 // Schema
-var Client = require('./app/models/schema.js');
+var Client = require('./app/models/clientSchema.js');
+var Project = require('./app/models/projectSchema.js');
+
 // Router
 var router = express.Router();
 router.use(function(req, res, next){
@@ -71,7 +73,7 @@ router.route('/clients')
 				res.send(err);
 			
 			res.json(client);
-		});
+		})
 	});
 
 // Client Route Via ID
@@ -104,7 +106,9 @@ router.route('/clients/:client_id')
 			client.clientWorkPhone = req.body.clientWorkPhone;
 			client.clientMobilePhone = req.body.clientMobilePhone;
 			client.clientProjects = req.body.clientProjects;
-
+			
+			//client.clientProjects.push('test');
+			
 			// save and error check
 			client.save(function(err) {
 				if (err)
@@ -126,6 +130,52 @@ router.route('/clients/:client_id')
 			res.json({ message: 'Successfully Deleted' });
 		});
 	});
+
+
+router.route('/clients/:client_id/projects')
+
+// Create Project
+	.post(function(req, res){
+		var project = new Project(); // model
+		
+			project._creator = req.params.client_id;
+			project.projectName = req.body.projectName;
+			project.projectStatus = req.body.projectStatus;
+		
+		console.log(project)
+		// save and error check
+		project.save (function(err){
+			if (err)
+				res.send(err);
+			res.json({ message: 'Project Created!' });
+		})
+		
+		
+		
+		Client.findById(project._creator, function(err, client) {			
+			if (err)
+			res.send(err);
+			client.clientProjects.push(project);
+			console.log(client);
+			
+			client.save(function(err) {
+				if (err)
+				res.send(err);
+				res.json({ message: 'Client Updated!' });
+			});
+		});
+	})
+	
+// Get All Clients
+	.get(function(req, res){
+		Project.find(function(err, project){
+			if (err)
+				res.send(err);
+			
+			res.json(project);
+		});
+	});	
+
 
 // ===== END API Setup
 // ===========================================================================

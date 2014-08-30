@@ -2,6 +2,7 @@
 	margin:0;
 	padding:0;
 	box-sizing:border-box;
+	transition:color 0.5s ease;
 	}
 
 body {
@@ -37,6 +38,24 @@ form * {
      clear: both;
      height: 0;
      }
+
+.alert {
+	border:1px solid rgba(0,0,0,.10);
+	padding:10px;
+	border-radius:5px;
+	font-weight:700;
+	font-size:14px;
+	display:inline-block;
+}
+
+.alert-danger a:hover {
+	color:green;
+}
+
+.alert-danger {
+	background:#ffcfcf;
+	color:#643232;
+}
 
 .container {
 	width:1140px;

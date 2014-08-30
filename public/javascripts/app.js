@@ -2,12 +2,12 @@ var clients = angular.module('clients', ['ngRoute']);
 
 clients.config(['$routeProvider', function ($routeProvider) {
     $routeProvider
-    	.when('/', 
+    	/*.when('/', 
         {
             controller: 'homeController',
             templateUrl: 'partials/home.html'
         })
-        .when('/about', 
+        /*.when('/about', 
         {
             controller: 'aboutController',
             templateUrl: 'partials/home.html'
@@ -16,7 +16,7 @@ clients.config(['$routeProvider', function ($routeProvider) {
         {
             controller: 'contactController',
             templateUrl: 'partials/home.html'
-        })			
+        })	*/		
         .when('/viewclients', 
         {
             controller: 'clientData',
@@ -24,8 +24,18 @@ clients.config(['$routeProvider', function ($routeProvider) {
         })
         .when('/details/:ID',
         {
-            controller: 'clientData',
+            controller: 'clientDetails',
             templateUrl: 'partials/clientdetails.html'
         })
-        .otherwise({ redirectTo: '/home.html' });
+        .when('/details/:ID/delete',
+        {
+            controller: 'deleteController',
+            templateUrl: 'partials/delete.html'
+        })
+        .when('/details/:ID/projects/:PID',
+        {
+	     	controller: 'projectController',
+	     	templateUrl: 'partials/projects.html'   
+        })
+        .otherwise({ redirectTo: '/viewclients' });
 }]);

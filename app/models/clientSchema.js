@@ -10,7 +10,7 @@ var clientSchema = new Schema({
 	clientAddress: Object,
 	clientWorkPhone: String,
 	clientMobilePhone: String,
-	clientProjects:Array
+	clientProjects: Array
 });
 
 module.exports = mongoose.model('Client', clientSchema);
