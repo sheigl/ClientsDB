@@ -1,0 +1,40 @@
+<button data-ng-click="back()">Return</button>
+
+<div class="full-clientCard clearfix">
+    
+    <div class="cardTop">{{ project.projectName | uppercase}}</div>
+	<div>Status: {{ project.projectStatus }}</div>
+	<div>Due Date: {{ project.projectDue }}</div>
+	<div>Start Date: {{ project.projectStartDate }}</div>
+	<div>Completed Date: {{ project.projectCompletedDate }}</div>
+	<hr />
+	<div>Notes: <br />{{ project.projectNotes }}</div>
+	<div data-ng-repeat="items in activites"><a href="#/details/{{ items._creator }}/projects/{{ items._project }}/activity/{{ items._id }}">{{ items.activityName }}</a></div>
+	<div class="delete alert alert-danger"><a href="#/details/{{ singleClient._id }}/projects/{{ projects._id }}/delete">Delete</a></div>
+ </div>
+ 
+ <form>
+ <input type="text" data-ng-model="formData.projectName"></input>
+ <input type="text" data-ng-model="formData.projectStatus"></input>
+ <button data-ng-click="addProject()">Add</button>
+ </form>
+ 
+ 
+ 
+ 
+ 
+ 	projectName: String,
+	projectStatus: String,
+	projectDue: Date,
+	projectStartDate: Date,
+	projectCompletedDate: Date,
+	projectNotes: String,
+	
+	
+		activityName: String,
+	activityCategory: String,
+	activityStartTime: Number,
+	activityEndTime: Number,
+	activityTotalTime: Number,
+	activityRate: Number,
+	activityTotal: Number

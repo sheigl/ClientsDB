@@ -11,7 +11,8 @@ clients.factory('alerts', function() {
 });
 
 clients.factory('windowControl', function(){
-	windowBack = function() { 
-    window.history.back();
+	windowBack = function(times) { 
+    console.log('back', times);
+    window.history.go(times);
 	};
 });
