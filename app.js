@@ -30,6 +30,7 @@ mongoose.connect('mongodb://localhost/dbClient');
 var Client = require('./app/models/clientSchema.js');
 var Project = require('./app/models/projectSchema.js');
 var Activity = require('./app/models/activitySchema.js');
+var User = require('./app/models/userSchema.js');
 
 // Router
 var router = express.Router();
@@ -46,13 +47,123 @@ app.use('/api', router);
 // Route to Clients view
 
 //========= 
+//============== Users
+
+router.route('/users')
+// Create Users
+	.post(function(req, res){
+		var user = new User(); // model
+		
+			user.userFirstName = req.body.userFirstName;
+			user.userLastName = req.body.userLastName;
+			user.userAddress = req.body.userAddress;
+			user.userAvatar = req.body.userAvatar;
+					
+		// save and error check
+		console.log(user);
+		user.save (function(err){
+			if (err)
+				res.send(err);
+			res.json({ message: 'User Created!' });
+		});
+	})
+
+// Get All Users
+	.get(function(req, res){
+		User.find(function(err, user){
+			if (err)
+				res.send(err);
+			
+			res.json(user);
+		})
+	});
+
+// User Route Via ID
+router.route('/users/:user_id')
+
+// Get Users Via ID
+	.get(function(req, res){
+		User.findById(req.params.user_id, function(err, user){
+			if (err)
+				res.send(err);
+			res.json(user);
+		});
+		
+		// Can't figure out populate function		
+		/*Client.findById('54021d048c5064e6df290638').populate('clientProjects').exec(function(err, client){
+			console.log('find', client.clientProjects);
+		});*/
+				
+	})
+
+// Update User Via ID
+	.put(function(req, res) {
+
+		User.findById(req.params.user_id, function(err, user) {
+
+			if (err)
+				res.send(err);
+
+			if (!req.body.userFirstName){
+				console.log('nothing to populate!');
+			} else {
+				user.userFirstName = req.body.userFirstName;
+			};
+			
+			if (!req.body.userLastName){
+				console.log('nothing to populate!');
+			} else {
+				user.userLastName = req.body.userLastName;
+			};
+			
+			if (!req.body.userAddress){
+				console.log('nothing to populate!');
+			} else {
+				user.userAddress = req.body.userAddress;
+			};
+			
+			if (!req.body.userAvatar){
+				console.log('nothing to populate!');
+			} else {
+				user.userAvatar = req.body.userAvatar;
+			};
+						
+						
+			console.log(user);
+						
+			// save and error check
+			user.save(function(err) {
+				if (err)
+					res.send(err);
+				res.json({ message: 'User Updated!' });
+			});
+
+		});
+	})
+
+// Delete User Via ID
+	.delete(function(req, res) {
+		User.remove({
+			_id: req.params.user_id
+		}, function(err, user) {
+			if (err)
+				res.send(err);
+
+			res.json({ message: 'Successfully Deleted' });
+		});
+	});
+
+
+
+//========= 
 //============== Clients
 
-router.route('/clients')
+router.route('/users/:user_id/clients')
 // Create Clients
 	.post(function(req, res){
 		var client = new Client(); // model
 		
+			client._creator = req.params.user_id;
 			client.clientID = req.body.clientID;
 			client.clientCompanyName = req.body.clientCompanyName;
 			client.clientContactFirstName = req.body.clientContactFirstName;
@@ -71,32 +182,25 @@ router.route('/clients')
 		});
 	})
 
-// Get All Clients
+// Get All Clients Via User ID
 	.get(function(req, res){
-		Client.find(function(err, client){
+		Client.find({ _creator: req.params.user_id }).exec(function(err, client){
 			if (err)
 				res.send(err);
-			
 			res.json(client);
-		})
-	});
+		});	
+	})
 
 // Client Route Via ID
-router.route('/clients/:client_id')
+router.route('/users/:user_id/clients/:client_id')
 
-// Get Clients Via ID
+// Get Via Client ID
 	.get(function(req, res){
-		Client.findById(req.params.client_id, function(err, client){
+		Client.findById(req.params.client_id).exec(function(err, client){
 			if (err)
 				res.send(err);
 			res.json(client);
-		});
-		
-		// Can't figure out populate function		
-		/*Client.findById('54021d048c5064e6df290638').populate('clientProjects').exec(function(err, client){
-			console.log('find', client.clientProjects);
-		});*/
-				
+		});	
 	})
 
 // Update Client Via ID
@@ -107,49 +211,49 @@ router.route('/clients/:client_id')
 			if (err)
 				res.send(err);
 
-			if (req.body.clientID === ''){
+			if (!req.body.clientID){
 				console.log('nothing to populate!');
 			} else {
 				client.clientID = req.body.clientID;
 			};
 			
-			if (req.body.clientCompanyName === ''){
+			if (!req.body.clientCompanyName){
 				console.log('nothing to populate!');
 			} else {
 				client.clientCompanyName = req.body.clientCompanyName;
 			};
 			
-			if (req.body.clientContactFirstName === ''){
+			if (!req.body.clientContactFirstName){
 				console.log('nothing to populate!');
 			} else {
 				client.clientContactFirstName = req.body.clientContactFirstName;
 			};
 			
-			if (req.body.clientContactLastName === ''){
+			if (!req.body.clientContactLastName){
 				console.log('nothing to populate!');
 			} else {
 				client.clientContactLastName = req.body.clientContactLastName;
 			};
 			
-			if (req.body.clientEmail === ''){
+			if (!req.body.clientEmail){
 				console.log('nothing to populate!');
 			} else {
 				client.clientEmail = req.body.clientEmail;
 			};
 			
-			if (req.body.clientAddress === ''){
+			if (!req.body.clientAddress){
 				console.log('nothing to populate!');
 			} else {
 				client.clientAddress = req.body.clientAddress;
 			};
 			
-			if (req.body.clientWorkPhone === ''){
+			if (!req.body.clientWorkPhone){
 				console.log('nothing to populate!');
 			} else {
 				client.clientWorkPhone = req.body.clientWorkPhone;
 			};
 			
-			if (req.body.clientMobilePhone === ''){
+			if (!req.body.clientMobilePhone){
 				console.log('nothing to populate!');
 			} else {
 				client.clientMobilePhone = req.body.clientMobilePhone;
@@ -182,13 +286,14 @@ router.route('/clients/:client_id')
 //========= 
 //============== Projects
 
-router.route('/clients/:client_id/projects')
+router.route('/users/:user_id/clients/:client_id/projects')
 
 // Create Project
 	.post(function(req, res){
 		var project = new Project(); // model
 		
-			project._creator = req.params.client_id;
+			project._creator = req.params.user_id;
+			project._client = req.params.client_id;
 			project.projectName = req.body.projectName;
 			project.projectStatus = req.body.projectStatus;
 			project.projectDue = req.body.projectDue;
@@ -209,7 +314,7 @@ router.route('/clients/:client_id/projects')
 
 // Get All Projects Via Client ID
 	.get(function(req, res){
-		Project.find({ _creator: req.params.client_id }).exec(function(err, client){
+		Project.find({ _client: req.params.client_id }).exec(function(err, client){
 			if (err)
 				res.send(err);
 			res.json(client);
@@ -217,7 +322,7 @@ router.route('/clients/:client_id/projects')
 	})
 	
 
-router.route('/clients/:client_id/projects/:project_id')
+router.route('/users/:user_id/clients/:client_id/projects/:project_id')
 
 // Get Via Project ID
 	.get(function(req, res){
@@ -236,13 +341,13 @@ router.route('/clients/:client_id/projects/:project_id')
 			if (err)
 				res.send(err);
 
-			if (req.body.projectName === ''){
+			if (!req.body.projectName){
 				console.log('nothing to populate!');
 			} else {
 				project.projectName = req.body.projectName;
 			};
 			
-			if (req.body.projectStatus === ''){
+			if (!req.body.projectStatus){
 				console.log('nothing to populate!');
 			} else {
 				project.projectStatus = req.body.projectStatus;
@@ -266,7 +371,7 @@ router.route('/clients/:client_id/projects/:project_id')
 				project.projectCompletedDate = req.body.projectCompletedDate;
 			};
 			
-			if (req.body.projectNotes === ''){
+			if (!req.body.projectNotes){
 				console.log('nothing to populate!');
 			} else {
 				project.projectNotes = req.body.projectNotes;
@@ -298,13 +403,14 @@ router.route('/clients/:client_id/projects/:project_id')
 //========= 
 //============== Activites
 
-router.route('/clients/:client_id/projects/:project_id/activity')
+router.route('/users/:user_id/clients/:client_id/projects/:project_id/activity')
 
 // Create Project
 	.post(function(req, res){
 		var activity = new Activity(); // model
 		
-			activity._creator = req.params.client_id;
+			activity._creator = req.params.user_id;
+			activity._client = req.params.client_id;
 			activity._project = req.params.project_id;
 			activity.activityName = req.body.activityName;
 			activity.activityCategory = req.body.activityCategory;
@@ -334,7 +440,7 @@ router.route('/clients/:client_id/projects/:project_id/activity')
 	})
 	
 
-router.route('/clients/:client_id/projects/:project_id/activity/:activity_id')
+router.route('/users/:user_id/clients/:client_id/projects/:project_id/activity/:activity_id')
 
 // Get Via Activity ID
 	.get(function(req, res){

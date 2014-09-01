@@ -28,7 +28,7 @@ clients.controller('projectController', function($scope, $routeParams, dbData, a
 	$scope.activites = [];
 	$scope.formData = {};
 	
-	dbData.project($routeParams.ID, $routeParams.PID).success(function(data){
+	dbData.project($routeParams.user_id, $routeParams.client_id, $routeParams.project_id).success(function(data){
 	    $scope.project = data;
 	});   
 	
@@ -55,14 +55,14 @@ clients.controller('projectController', function($scope, $routeParams, dbData, a
 
 clients.controller('deleteController', function($scope, $routeParams, dbData, alerts, windowControl){
 	
-	$scope.ID = $routeParams.ID;
+	$scope.ID = $routeParams.client_id;
 	$scope.back = windowBack;
 	
-	$scope.deleteClient = function(id){
-	console.log(id);
-	dbData.deleteClient(id)
+	$scope.deleteClient = function(client_id){
+	console.log(client_id);
+	dbData.deleteClient(client_id)
 		.success(function(){
-			console.log('deleted', id);
+			console.log('deleted', client_id);
 			windowBack(2);
 		}).
 		error(function(error){
@@ -72,18 +72,18 @@ clients.controller('deleteController', function($scope, $routeParams, dbData, al
 	
 });
 
-clients.controller('clientDetails', function ($scope, $routeParams, dbData) {
+clients.controller('clientDetails', function ($scope, $routeParams, dbData, windowControl) {
 
-	
+	$scope.back = windowBack;
     $scope.singleClient = [];
     $scope.allProjects = [];
 	
-	    dbData.singleClient($routeParams.ID).success(function(data){
-		    console.log($routeParams.ID);
+	    dbData.singleClient($routeParams.user_id, $routeParams.client_id).success(function(data){
+		    console.log($routeParams.client_id);
 		    $scope.singleClient = data;
 	    });
 	    
-	    dbData.projects($routeParams.ID).success(function(data){
+	    dbData.projects($routeParams.user_id, $routeParams.client_id).success(function(data){
 		    $scope.allProjects = data;
 	    });   
 
@@ -95,7 +95,7 @@ clients.controller('createClient', function ($scope, $routeParams, dbData, windo
 	$scope.nextID = [];
     
     function getNextID () {
-    dbData.getClients().success(function(data){
+    dbData.getClients($routeParams.user_id).success(function(data){
 	    var i;
 	    for(i = 0;i < data.length;i++){
 	    //console.log(data[i].clientID);
@@ -112,12 +112,12 @@ clients.controller('createClient', function ($scope, $routeParams, dbData, windo
     getNextID();
     
     $scope.formData = {};
-    var client = $scope.formData;
+    var data = $scope.formData;
     
     $scope.insertClient = function(){
         getNextID();
         client['clientID'] = $scope.nextID
-        dbData.insertClient(client)
+        dbData.insertClient($routeParams.user_id, data)
             .success(function () {
                 $scope.status = 'Inserted Client! Refreshing client list.';
                 //$scope.dbClients.push(client);
@@ -134,11 +134,18 @@ clients.controller('createClient', function ($scope, $routeParams, dbData, windo
 
 clients.controller('clientData', function ($scope, $routeParams, dbData) {
     
-    $scope.ID = $routeParams.ID;
-    
     $scope.dbClients = [];
-    dbData.getClients().success(function(data){
+    dbData.getClients($routeParams.user_id).success(function(data){
 	    $scope.dbClients = data;
+    });
+	
+});
+
+clients.controller('usersController', function ($scope, $routeParams, dbData) {
+    
+    $scope.dbUsers = [];
+    dbData.getUsers().success(function(data){
+	    $scope.dbUsers = data;
     });
 	
 });

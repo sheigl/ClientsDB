@@ -3,6 +3,7 @@ var Schema = mongoose.Schema;
 
 var activitySchema = new Schema({
 	_creator: Schema.Types.ObjectId,
+	_client: Schema.Types.ObjectId,
 	_project: Schema.Types.ObjectId,
 	activityName: String,
 	activityCategory: String,

@@ -45,10 +45,12 @@ button {
 	font-weight:700;
 	font-size:14px;
 	display:inline-block;
+	background:#34B484;
+	color:#fff;
 }
 
 .submit {
-	background:#aaccff;
+	background:#34B484;
 }
 
 .clearfix:after {
@@ -130,7 +132,7 @@ button {
 }
 
 div.cardTop {
-	background:linear-gradient(#5292ff 0%, #0760fc 100%);
+	background:#45a6cc;
 	padding:5px;
 	font-weight:700;
 	font-size:1.5em;

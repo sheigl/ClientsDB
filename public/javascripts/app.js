@@ -2,60 +2,55 @@ var clients = angular.module('clients', ['ngRoute']);
 
 clients.config(['$routeProvider', function ($routeProvider) {
     $routeProvider
-    	/*.when('/', 
+    	.when('/', 
         {
-            controller: 'homeController',
+            controller: 'usersController',
             templateUrl: 'partials/home.html'
         })
-        /*.when('/about', 
+        .when('/:user_id', 
         {
-            controller: 'aboutController',
+            controller: 'usersController',
             templateUrl: 'partials/home.html'
-        })	
-        .when('/contact', 
-        {
-            controller: 'contactController',
-            templateUrl: 'partials/home.html'
-        })	*/		
-        .when('/viewclients', 
+        })
+        .when('/:user_id/clients', 
         {
             controller: 'clientData',
             templateUrl: 'partials/viewclients.html'
         })
-        .when('/create', 
+        .when('/:user_id/clients/create', 
         {
             controller: 'createClient',
             templateUrl: 'partials/createclient.html'
         })
-        .when('/details/:ID',
+        .when('/:user_id/clients/details/:client_id',
         {
             controller: 'clientDetails',
             templateUrl: 'partials/clientdetails.html'
         })
-        .when('/details/:ID/delete',
+        .when('/:user_id/clients/details/:client_id/delete',
         {
             controller: 'deleteController',
             templateUrl: 'partials/delete.html'
         })
-        .when('/details/:ID/projects/:PID',
+        .when('/:user_id/clients/details/:client_id/projects/:project_id',
         {
 	     	controller: 'projectController',
 	     	templateUrl: 'partials/projects.html'   
         })
-        .when('/details/:ID/projects/:PID/delete',
+        .when('/:user_id/clients/details/:client_id/projects/:project_id/delete',
         {
             controller: 'deleteController',
             templateUrl: 'partials/delete.html'
         })
-        .when('/details/:ID/projects/:PID/activities/:AID',
+        .when('/:user_id/clients/details/:client_id/projects/:project_id/activities/:activity_id',
         {
 	     	controller: 'projectController',
 	     	templateUrl: 'partials/activites.html'   
         })
-        .when('/details/:ID/projects/:PID/activities/:AID/delete',
+        .when('/:user_id/clients/details/:client_id/projects/:project_id/activities/:activity_id/delete',
         {
             controller: 'deleteController',
             templateUrl: 'partials/delete.html'
         })
-        .otherwise({ redirectTo: '/viewclients' });
+        .otherwise({ redirectTo: '/' });
 }]);

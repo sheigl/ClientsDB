@@ -1,4 +1,4 @@
-﻿<a href="#/viewclients">Return to Client List</a>
+﻿<button data-ng-click="back(-1)">Return to Client List</button>
 
 <div class="full-clientCard clearfix">
     
@@ -9,8 +9,9 @@
     <div>{{ singleClient.clientAddress["addressStreet"] }} {{ singleClient.clientAddress["addressCity"] }} {{ singleClient.clientAddress["addressState"] }} {{ singleClient.clientAddress["addressZip"] }}</div>
     <div>{{ singleClient.clientWorkPhone }}</div>
     <div>{{ singleClient.clientMobilePhone }}</div>
-	<div data-ng-repeat="projects in allProjects"><a href="#/details/{{ singleClient._id }}/projects/{{ projects._id }}">{{ projects.projectName }}</a> | {{ projects.projectStatus }}</div>
-	<div class="delete alert alert-danger"><a href="#/details/{{ singleClient._id }}/delete"><i class="fa fa-trash"></i></a></div>
+	<h2>Projects</h2>
+	<div data-ng-repeat="projects in allProjects"><a href="#/{{ singleClient._creator }}/clients/details/{{ singleClient._id }}/projects/{{ projects._id }}">{{ projects.projectName }}</a> | {{ projects.projectStatus }}</div>
+	<div class="delete alert alert-danger"><a href="#/{{ singleClient._creator }}/clients/details/{{ singleClient._id }}/delete"><i class="fa fa-trash"></i></a></div>
  </div>
  
  <!-- <form>

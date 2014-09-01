@@ -4,8 +4,8 @@
     <h1>{{ filter.quickSearch | uppercase }}</h1>
    
     <div class="clientCard clearfix" data-ng-repeat="client in dbClients | filter:filter.quickSearch">
-    
-    <div class="cardTop"><a href="#/details/{{ client._id }}">{{ client.clientCompanyName | uppercase}}</a></div>
+    <a href="#/{{ client._creator }}/clients/details/{{ client._id }}">
+    <div class="cardTop">{{ client.clientCompanyName | uppercase}}</div>
     <div>{{ client.clientContactFirstName }}</div>
     <div>{{ client.clientContactLastName }}</div>
     <div>{{ client.clientEmail }}</div>
@@ -13,6 +13,7 @@
     <div>{{ client.clientWorkPhone }}</div>
     <div>{{ client.clientMobilePhone }}</div>
 	<!-- <div class="delete alert alert-danger"><a href="#/details/{{ client._id }}/delete">Delete</a></div> -->
+    </a>
     </div>
     
     <a href="#/create"><div class="clientCard clearfix create"><i class="fa fa-plus-square"></i></div></a>

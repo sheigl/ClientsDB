@@ -1,42 +1,46 @@
 clients.factory('dbData', function($http) {
 
-	var urlBase = 'api/clients';
+	var urlBase = 'api/users';
 	var dbData = {};
 	
-	dbData.getClients = function(){
+	dbData.getUsers = function(){
 		return $http.get(urlBase);
 	};
 	
-	dbData.insertClient = function(client){
-		return $http.post(urlBase, client);
+	dbData.getClients = function(user_id){
+		return $http.get(urlBase + '/' + user_id + '/' + 'clients');
 	};
 	
-	dbData.singleClient = function(client_id){
-		return $http.get(urlBase + '/' + client_id);
+	dbData.insertClient = function(user_id, data){
+		return $http.post(urlBase + '/' + user_id + '/' + 'clients', data);
 	};
 	
-	dbData.projects = function(client_id){
-		return $http.get(urlBase + '/' + client_id + '/' + 'projects');
+	dbData.singleClient = function(user_id, client_id){
+		return $http.get(urlBase + '/' + user_id + '/' + 'clients' + '/' + client_id);
 	};
 	
-	dbData.project = function(client_id, project_id){
-		return $http.get(urlBase + '/' + client_id + '/' + 'projects' + '/' + project_id);
+	dbData.updateClient = function(user_id, client_id, data){
+		return $http.put(urlBase + '/' + user_id + '/' + 'clients' + '/' + client_id, data)
 	};
 	
-	dbData.activites = function(client_id, project_id){
-		return $http.get(urlBase + '/' + client_id + '/' + 'projects' + '/' + project_id + '/' +'activity');
+	dbData.projects = function(user_id, client_id){
+		return $http.get(urlBase + '/' + user_id + '/' + 'clients' + '/' + client_id + '/' + 'projects');
 	};
 	
-	dbData.activity = function(client_id, project_id, activity_id){
-		return $http.get(urlBase + '/' + client_id + '/' + 'projects' + '/' + project_id + '/' +'activity' + '/' + activity_id);
+	dbData.project = function(user_id, client_id, project_id){
+		return $http.get(urlBase + '/' + user_id + '/' + 'clients' + '/' + client_id + '/' + 'projects' + '/' + project_id);
 	};
 	
-	dbData.updateClient = function(client_id, data){
-		return $http.put(urlBase + '/' + client_id, data)
+	dbData.activites = function(user_id, client_id, project_id){
+		return $http.get(urlBase + '/' + user_id + '/' + 'clients' + '/' + client_id + '/' + 'projects' + '/' + project_id + '/' +'activity');
 	};
 	
-	dbData.deleteClient = function(id){
-		return $http.delete(urlBase + '/' + id);
+	dbData.activity = function(user_id, client_id, project_id, activity_id){
+		return $http.get(urlBase + '/' + user_id + '/' + 'clients' + '/' + client_id + '/' + 'projects' + '/' + project_id + '/' +'activity' + '/' + activity_id);
+	};
+	
+	dbData.deleteClient = function(user_id, client_id){
+		return $http.delete(urlBase + '/' + user_id + '/' + 'clients' + '/' + client_id);
 	};
 	
 	return dbData;

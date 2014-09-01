@@ -1,3 +1,6 @@
-<div>
-{{ welcomeMessage }}
+<div data-ng-repeat="user in dbUsers">
+<a href="#/{{ user._id }}/clients"><div class="userCard">
+<div>{{ user.userFirstName }} {{ user.userLastName }}</div>
+<div class="avatar"><img src="{{ user.userAvatar }}" /></div>	
+</div></a>
 </div>
